@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  db:
+    container_name: mysql10
+    image: mysql:5.7
+    restart: always
+    ports:
+      - '3306:3306'
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=avaliacao
+  apache:
+    build: .
+    container_name: php10
+    restart: always
+    ports:
+      - '8081:80'
+      - '443:8443'
+    volumes:
+      - ./www:/var/www/html
+    links:
+      - db
